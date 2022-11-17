@@ -22,7 +22,7 @@ jobs:
       - name: Get dependencies
         run: go get .
       - name: Build
-        run: go build -x -v -i dist/
+        run: go build -x -v -o dist/
       - uses: actions/upload-artifact@v3
         with:
           name: auto-zoom-${{ matrix.os }}

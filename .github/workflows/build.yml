@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.19
+          cache: true
+      - name: Get dependencies
+        run: go get .
+      - name: Build
+        run: go build -x -v -i dist/
+      - uses: actions/upload-artifact@v3
+        with:
+          name: auto-zoom-${{ matrix.os }}
+          path: |
+            dist/*
